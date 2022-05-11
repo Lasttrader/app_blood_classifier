@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>Blood classifier</title>
+<style>
+  body, html {
+    overflow-y: auto; /* Убираем вертикальную полосу прокрутки */
+   }
+   .layer {   
+    margin: auto; /* Выравниваем по центру */
+    width: 600px;  /*Ширина блока */
+    height: 200vh;
+   } 
+</style> 
+<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
+
+ </head>
+
+<body>
+ <div class="layer">
+	<h1>Predict Blood Analysis</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+        <small><small>Ваш пол (1-м, 2-ж):<small></small>
+    	  <input type="text" name="gender" placeholder="Gender" required="required" />
+
+        <small>Ваш возраст в месяцах (от 0 до 1019):</small>
+        <input type="text" name="age" placeholder="Age" required="required" />
+
+        <big>Ваш семейный доход (от 0 до 11): </big>
+        <small>Доход семьи в $ проставить соотвествующую цифру: 1 - 0-5K; 2 - 5-9,9K; 3 - 10-14,9K; 4 - 15-19,9K; 5 - 20-24,9K; 6 - 25-34,9K; 7 - 35-44,9K; 8 - 45-54,9k; 9 - 55-64,9K; 10 - 65-74K; 11 - over 75K'</small>
+		    <input type="text" name="famlyincome" placeholder="Family Income" required="required" />
+
+        <big>Доход главы семьи (от 0 до 11): </big>
+        <small>Доход главы семьи в $ проставить соотвествующую цифру: 1 - 0-5K; 2 - 5-9,9K; 3 - 10-14,9K; 4 - 15-19,9K; 5 - 20-24,9K; 6 - 25-34,9K; 7 - 35-44,9K; 8 - 45-54,9k; 9 - 55-64,9K; 10 - 65-74K; 11 - over 75K'</small>
+        <input type="text" name="hincome" placeholder="Head income" required="required" />
+
+        <small> Семейное положение: (1 - женат; 2 - вдова(ец); 3 - в разводе; 4 - проживаем отдельно; 5 - никогда не был в браке; 6 - проживаю с партнером):</small>
+        <input type="text" name="marital" placeholder="Marital status" required="required" />
+
+        <small>Раса: (1 - mexican 2 - other hispanic; 3 - white; 4 - black; 5 - other): </small>
+        <input type="text" name="race" placeholder="Race" required="required" />
+
+        <small>Уровень бедности (от 0.00 до 5.00):</small>
+        <input type="text" name="poverty" placeholder="Poverty required="required" />
+
+        <p>Анализы (поставить в нужном поле 1):  </p>
+
+        <small>Получить анализы (отрицательные) 1 - да; 2 - нет: </small>
+        <input type="text" name="annegative" placeholder="Analysis negative"/>
+        <small>Получить анализы (положительные) 1 - да; 2 - нет:</small>
+        <input type="text" name="anpositive" placeholder="Analysis positive"/>
+
+        <small>Получить анализы (случайные) 1 - да; 2 - нет:</small>
+        <input type="text" name="anrandom" placeholder="Analysis random"/>
+
+        
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+  
+   <br>
+   {{test_text2}}
+
+
+   <br>
+   <br>
+   <p>Класс анализа Blood classifier: <br>
+    2. - отрицательный<br>
+    1. - положительный<br>
+    9. - зона риска, требуется повторный анализ<br>
+    7. - зона риска, требуется повторный анализ<br> 
+    0. - зона риска, требуется повторный анализ<br>
+   </p>
+   {{ prediction_text }}
+
+ </div>
+
+
+</body>
+</html>
